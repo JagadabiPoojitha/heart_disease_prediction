@@ -1,0 +1,84 @@
+{% load static %}
+<html>
+    <head>
+        <title>Register</title>
+        <style>
+            * {
+            margin: 10;
+            padding: 0;
+            box-sizing: border-box;
+        }
+            body {
+            background-image: url("{% static 'images/Heart6.jpg' %}");
+            background-size: cover; /* Makes the background cover the entire page */
+            background-repeat: no-repeat; /* Prevents the background from repeating */
+            background-position: center center; 
+        }
+
+
+        .card {
+            display: flex;
+            flex-direction: column;
+            height: 700px;
+            width: 500px;
+            border: 1px solid white;
+            align-items: center;
+            margin: auto;
+            margin-top: 200px;
+           /* background-color: rgba(0, 0, 0, 0.5);*/
+            border-radius: 20px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5); /*Complete the box-shadow property */
+            overflow: hidden;
+            text-align: center;
+        }
+
+        .card-image {
+            width: 100%;
+            height: auto;
+        }
+        .card-title {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+            .card-description {
+            font-size: 16px;
+            color: white;
+            margin-bottom: 20px;
+        }
+
+        .card-button {
+            text-decoration: none;
+            background-color: white;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+        .card-button:hover {
+            background-color: white;
+        }
+        
+       
+    
+           
+        </style>
+    </head>
+    <body>
+        <div class="card">
+            
+            <div class="card-content">
+                
+        <script src="script.js"></script>
+        <h2>Register</h2>
+        <form method ="POST" action ="{% url 'register' %}">
+            {% csrf_token %} 
+            {{ form.as_p }}
+            <button type="submit">Register</button>
+        </form>
+        <p>Already have an account? <a href="{% url 'login' %}">Login here</a></p>
+        <p>Go Back<a href="{% url 'home' %}">Home</a>
+            </div>
+            </div>
+    </body>
+</html>

@@ -1,0 +1,28 @@
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome</title>
+    <style>
+        body {
+            background-image: url("{% static 'images/Heart8.jpg' %}");
+            background-size: cover; /* Makes the background cover the entire page */
+            background-repeat: no-repeat; /* Prevents the background from repeating */
+            background-position: center center; 
+            display: flex;  /* Use Flexbox for centering */
+            align-items: center;  /* Center items vertically */
+            justify-content: center;  /* Center items horizontally */
+            color: black;  /* Text color */
+            text-align: center;  /* Center text */
+            font-family: Arial, sans-serif; 
+            margin: 0;  /* Remove default margin */
+            height: 100vh;
+        }
+    </style>
+</head>
+<body>
+    <h2>Welcome!</h2>
+    <p>You have successfully logged in.</p>
+</body>
+</html>
