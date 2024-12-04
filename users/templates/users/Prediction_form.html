@@ -1,0 +1,311 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Health Prediction Form</title>
+    
+    
+    <style>
+        /* Body background with blue and white gradient */
+body {
+    background: linear-gradient(to bottom, #e6f7ff, #80d4ff); /* Blue and white gradient */
+    color: #000; /* Text color */
+    font-family: 'Arial', sans-serif;
+    height: 100vh;
+    margin: 0;
+}
+
+/* Form container styling */
+.form-container {
+    margin: 5% auto;
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.95); /* White with slight transparency */
+    border-radius: 10px;
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
+}
+
+/* Button styling */
+.btn-predict {
+    background-color: rgb(224, 91, 19); /* Bright blue button */
+    border: none;
+    color: white;
+    font-size: 1.2em;
+    transition: all 0.3s ease-in-out;
+}
+
+.btn-predict:hover {
+    background-color: orange; /* Darker blue on hover */
+    box-shadow: 0px 0px 15px orange; /* Glow effect */
+}
+
+/* Input field styling */
+input.form-control, select.form-control {
+    background-color: rgba(255, 255, 255, 0.9); /* Light input field */
+    color: #000;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+/* Placeholder styling */
+input::placeholder {
+    color: #888;
+    font-style: italic;
+}
+
+/* Responsive design: adjust form width for smaller screens */
+@media (max-width: 768px) {
+    .form-container {
+        width: 90%;
+    }
+}
+
+/* Optional: Add a floating image */
+.background-image {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    width: 150px; /* Adjust size */
+    opacity: 0.2; /* Subtle appearance */
+    z-index: -1; /* Place behind content */
+}
+        body {
+            background-color: #f0f8ff;
+            background-image: url("{% static 'heart_form.png' %}");
+            background-repeat: no-repeat;
+            background-size: cover;
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: space-between;
+            font-family: 'Arial', sans-serif;
+        }
+
+        .disclaimer-container {
+            width: 500px;
+            margin: 20px;
+            padding: 2rem;
+            background: transparent;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            height: fit-content;
+            animation: fadeIn 1s ease-out;
+        }
+
+        .disclaimer-heading {
+            color: whitesmoke;
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .disclaimer-content {
+            background: rgba(255, 255, 255, 0.7);
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .instructions {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .instructions li {
+            margin-bottom: 10px;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .instructions li:before {
+            content: "•";
+            color: rgb(236, 94, 94);
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+        }
+
+        .form-container {
+            width: 450px;
+            background: #ffffff;
+            box-shadow: -5px 0 20px rgba(0, 123, 255, 0.1);
+            border-radius: 10px;
+            height: 100vh;
+            position: relative;
+            animation: slideInFromRight 1s ease-out;
+        }
+
+        .form-header {
+            position: sticky;
+            top: 0;
+            background: #ffffff;
+            z-index: 1000;
+            padding: 20px;
+            border-bottom: 3px solid #f17049;
+        }
+
+        .form-content {
+            height: calc(100vh - 100px);
+            overflow-y: auto;
+            padding: 20px;
+        }
+
+        .form-heading {
+            color: #ec281a;
+            font-size: 24px;
+            font-weight: 700;
+            text-align: center;
+            margin: 0;
+        }
+
+        form p {
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        form p label {
+            display: block;
+            margin-bottom: 8px;
+            color: #ec4d14;
+            font-weight: 600;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        form p input, form p select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e1e1e1;
+            border-radius: 10px;
+            background-color: #ffffff;
+            color: #333;
+            font-size: 15px;
+            transition: all 0.3s ease;
+        }
+
+        form p input:focus, form p select:focus {
+            outline: none;
+            border-color: #ce4121;
+            box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+        }
+
+        .btn-predict {
+            background: linear-gradient(45deg, #e9650c, #dd3207);
+            color: white;
+            border: none;
+            padding: 12px 35px;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+            width: 100%;
+            margin-top: 20px;
+            box-shadow: 0 4px 15px rgba(0, 123, 255, 0.2);
+        }
+
+        .btn-predict:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 123, 255, 0.3);
+            background: linear-gradient(45deg, #f63a25, #f2622d);
+        }
+
+        form p select {
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%23333' viewBox='0 0 16 16'%3E%3Cpath d='M8 11.5l-5-5h10l-5 5z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 15px center;
+            padding-right: 40px;
+        }
+
+        .form-content::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .form-content::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        .form-content::-webkit-scrollbar-thumb {
+            background: orangered;
+            border-radius: 4px;
+        }
+
+        .form-content::-webkit-scrollbar-thumb:hover {
+            background: orangered;
+        }
+
+        @keyframes slideInFromRight {
+            0% {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            100% {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            body {
+                flex-direction: column;
+            }
+
+            .disclaimer-container {
+                width: 90%;
+                margin: 10px auto;
+            }
+
+            .form-container {
+                width: 100%;
+            }
+
+            .form-heading {
+                font-size: 20px;
+            }
+
+            .btn-predict {
+                padding: 10px 20px;
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    
+
+    <div class="form-container">
+        <div class="form-header">
+            <h3 class="form-heading">Health Prediction Form</h3>
+        </div>
+        <div class="form-content">
+            <form method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <div class="d-flex justify-content-center">
+                    <button type="submit" class="btn btn-predict">Predict</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    
+</body>
+</html>

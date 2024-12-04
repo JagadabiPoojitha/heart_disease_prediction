@@ -21,5 +21,8 @@ from users import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('users/',include('users.urls')),
-    path('',views.home, name='home'), # we made home page as a root url here.
+    path('',views.home, name='home'),
+
 ]
+
+
