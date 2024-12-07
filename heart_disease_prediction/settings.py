@@ -140,3 +140,8 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'jagadabipoojitha@gmail.com'  # your Gmail address
 EMAIL_HOST_PASSWORD = 'poojitha@03'  # App Password or email password
+
+
+
+
+

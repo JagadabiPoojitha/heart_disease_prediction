@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Heart Disease Prediction</title>
+</head>
+<body>
+    <h1>Predict Risk of Heart Disease</h1>
+    <form method="POST">
+        {% csrf_token %}
+        <button type="submit">Run Prediction</button>
+    </form>
+</body>
+</html>

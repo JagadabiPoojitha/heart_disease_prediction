@@ -1,0 +1,83 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Heart Disease Health Tips</title>
+    <style>
+        body {
+            background-image: url("{% static 'images/heart66.jpg' %}");
+            background-size: 100%,30%; /* Makes the background cover the entire page */
+            background-repeat: no-repeat; /* Prevents the background from repeating */
+            background-position: center center; 
+            background-attachment: fixed;
+        }
+
+        /* Add some basic styling */
+        .card-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: space-around;
+
+        }
+
+        .card {
+            border: 1px solid whitesmoke;
+            border-radius: 8px;
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+            padding: 15px;
+            width: 250px;
+            text-align: center;
+            
+            
+        }
+
+        .card:hover {
+            transform: scale(1.05);
+        }
+
+        .card h3 {
+            font-size: 35px;
+            margin-bottom: 25px;
+            font-weight: bold;
+            text-shadow: 3px 3px 5px gray; 
+        }
+
+        .card p {
+            font-size: 24px;
+            color: white;
+            box-shadow: 0cm;
+            font-weight: bold;
+            text-shadow: 3px 3px 5px gray; 
+        }
+        .h1{
+            font-weight: bold;
+            text-shadow: 3px 3px 5px gray; 
+        }
+    </style>
+</head>
+<body>
+    <h1 style="text-align: center; margin-bottom: 20px;">Heart Disease Health Tips</h1>
+    <div class="card-container">
+        {% for tip in tips %}
+            <div class="card">
+                <h3>{{ tip.title }}</h3>
+                <p>{{ tip.description }}</p>
+            </div>
+        {% empty %}
+            <p style="text-align: center;">No tips available at the moment.</p>
+        {% endfor %}
+        <div class="card">
+    
+            <div class="card-content">
+                
+        <script src="script.js"></script>
+            
+        
+        <p>Go To dashboard<a href="{% url 'dashboard' %}">dashboard</a>
+        
+            
+        </div>
+    </div>
+</body>
+</html>

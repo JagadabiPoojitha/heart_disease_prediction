@@ -1,7 +1,7 @@
 {% load static %}
 <html>
     <head>
-        <title>Register</title>
+        <title>Register Form</title>
         <style>
             * {
             margin: 10;
@@ -9,7 +9,7 @@
             box-sizing: border-box;
         }
             body {
-            background-image: url("{% static 'images/Heart6.jpg' %}");
+            background-image: url("{% static 'images/Heart7.jpg' %}");
             background-size: cover; /* Makes the background cover the entire page */
             background-repeat: no-repeat; /* Prevents the background from repeating */
             background-position: center center; 
@@ -19,7 +19,7 @@
         .card {
             display: flex;
             flex-direction: column;
-            height: 700px;
+            height: 600px;
             width: 500px;
             border: 1px solid white;
             align-items: center;
@@ -57,28 +57,39 @@
         }
         .card-button:hover {
             background-color: white;
-        }
-        
+        }  
        
-    
-           
-        </style>
+    </style>
     </head>
     <body>
         <div class="card">
-            
+    
             <div class="card-content">
                 
         <script src="script.js"></script>
-        <h2>Register</h2>
-        <form method ="POST" action ="{% url 'register' %}">
-            {% csrf_token %} 
-            {{ form.as_p }}
-            <button type="submit">Register</button>
-        </form>
-        <p>Already have an account? <a href="{% url 'login' %}">Login here</a></p>
-        <p>Go Back<a href="{% url 'home' %}">Home</a>
+            
+    <h2>Registration Form</h2>
+            <form method="POST" action="{% url 'register' %}">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <input type="submit" value="Register">
+            </form>
+        
+            {% if form.errors %}
+            <div style="color: red;">
+                <h4>Form Errors:</h4>
+                <ul>
+                    {% for field, errors in form.errors.items %}
+                        {% for error in errors %}
+                            <li>{{ field }}: {{ error }}</li>
+                        {% endfor %}
+                    {% endfor %}
+                </ul>
             </div>
-            </div>
-    </body>
-</html>
+            {% endif %}
+        
+            <p>Already have an account? <a href="{% url 'login' %}">Login here</a></p>
+            <p>Go Back <a href="{% url 'home' %}">Home</a></p>
+        </body>
+        </html>
+        

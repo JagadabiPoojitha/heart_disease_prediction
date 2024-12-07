@@ -13,100 +13,167 @@ class RegisterForm(UserCreationForm):
         model = User
         fields = ['username', 'email', 'phone_number','dob','Hospital_name', 'password1', 'password2']
 
+from django import forms
+from django.core.validators import RegexValidator
+from django.core.exceptions import ValidationError
+import re
+
+# Custom password validation logic
+def validate_password(password):
+    # Rule 1: Password can't be too similar to other personal information.
+    # This example assumes they shouldn't use their username, hospital name, or other similar terms.
+    if re.search(r'username', password, re.IGNORECASE):
+        raise ValidationError("Password is too similar to your username.")
+    if re.search(r'hospital', password, re.IGNORECASE):
+        raise ValidationError("Password is too similar to your hospital name.")
+
+    # Rule 2: Password should be at least 8 characters
+    if len(password) < 8:
+        raise ValidationError("Your password must contain at least 8 characters.")
+
+    # Rule 3: Password can't be entirely numeric
+    if password.isnumeric():
+        raise ValidationError("Your password cannot be entirely numeric.")
+
+    # Rule 4: Password can't be a commonly used password
+    commonly_used_passwords = ['123456', 'password', 'qwerty', 'abc123']
+    if password.lower() in commonly_used_passwords:
+        raise ValidationError("Your password can't be a commonly used password.")
+
+
+class RegistrationForm(forms.Form):
+    username = forms.CharField(
+        max_length=150,
+        required=True,
+        widget=forms.TextInput(attrs={"placeholder": "Enter username"}),
+        
+    )
+    email = forms.EmailField(
+        required=True,
+        widget=forms.EmailInput(attrs={"placeholder": "Enter email"})
+    )
+    phone_number = forms.CharField(
+        required=True,
+        validators=[
+            RegexValidator(
+                regex=r'^\+?1?\d{9,15}$',
+                message="Phone number must be entered in the format: '+999999999'. Up to 15 digits allowed."
+            )
+        ],
+        widget=forms.TextInput(attrs={"placeholder": "Enter phone number"})
+    )
+    dob = forms.DateField(
+        required=True,
+        widget=forms.DateInput(attrs={"type": "date"})
+    )
+    hospital_name = forms.CharField(
+        max_length=200,
+        required=True,
+        widget=forms.TextInput(attrs={"placeholder": "Enter hospital name"})
+    )
+    password = forms.CharField(
+        required=True,
+        widget=forms.PasswordInput(attrs={"placeholder": "Enter password"}),
+        
+    )
+    password_confirmation = forms.CharField(
+        required=True,
+        widget=forms.PasswordInput(attrs={"placeholder": "Confirm password"})
+    )
+
+    # Custom clean method for validating password
+    def clean_password(self):
+        password = self.cleaned_data.get('password')
+        validate_password(password)
+        return password
+
+    # Ensure that the password and its confirmation match
+    def clean(self):
+        cleaned_data = super().clean()
+        password = cleaned_data.get('password')
+        password_confirmation = cleaned_data.get('password_confirmation')
+
+        if password and password_confirmation and password != password_confirmation:
+            raise ValidationError("Passwords do not match.")
 
 class Prediction_form(forms.Form):
-    height = forms.FloatField(
+     height = forms.FloatField(
         label='Height (cm)',
-        widget=forms.NumberInput(attrs={'class': 'form-control'}),
-        required=True
-    )
-    weight = forms.FloatField(
-        label='weight (kg)',
-        widget=forms.NumberInput(attrs={'class': 'form-control'}),
-        required=True
-    )
-    temperature = forms.FloatField(
-        label='Temperature (°C)',
-        widget=forms.NumberInput(attrs={'class': 'form-control'}),
-        required=True
-    )
-    heart_rate = forms.FloatField(
-        label='heart_rate (bpm)',
-        widget=forms.NumberInput(attrs={'class': 'form-control'}),
-        required=True
-    )
-    cholesterol = forms.FloatField(
-        label='cholesterol (mg/dl)',
-        widget=forms.NumberInput(attrs={'class': 'form-control'}),
-        required=True
-    )
-    blood_sugar = forms.FloatField(
-        label='blood_sugar (mg/dl)',
-        widget=forms.NumberInput(attrs={'class': 'form-control'}),
-        required=True
-    )
-    systolic = forms.FloatField(
+        widget=forms.NumberInput(attrs={'class': 'form-control'})
+        )
+     weight = forms.FloatField(
+        label='Weight (kg)',
+        widget=forms.NumberInput(attrs={'class': 'form-control'})
+        )
+     temperature = forms.FloatField(
+        label='Temperature (C)',
+        widget=forms.NumberInput(attrs={'class': 'form-control'})
+        )
+     heart_rate = forms.FloatField(
+        label='Heart_rate (C)',
+        widget=forms.NumberInput(attrs={'class': 'form-control'})
+        )
+     
+     cholestrol = forms.FloatField(
+        label='Cholestrol (mg/dl)',
+        widget=forms.NumberInput(attrs={'class': 'form-control'})
+        )
+     blood_sugar = forms.FloatField(
+        label='Blood_Sugar  (mg/dl)',
+        widget=forms.NumberInput(attrs={'class': 'form-control'})
+        )
+     systolic = forms.FloatField(
         label='Systolic Pressure',
-        widget=forms.NumberInput(attrs={'class': 'form-control'}),
-        required=True
-    )
-    diastolic = forms.FloatField(
-        label='Diastolic Pressure',
-        widget=forms.NumberInput(attrs={'class': 'form-control'}),
-        required=True
-    )
-    symptoms = forms.ChoiceField(
+       widget=forms.NumberInput(attrs={'class': 'form-control'})
+        )
+     diastolic = forms.FloatField(
+        label='Diastolic Pressure', widget=forms.NumberInput(attrs={'class': 'form-control'})
+        )
+     existing_conditions = forms.ChoiceField(
         choices=[
-            ('None', 'None'),
-            ('Chest Pain', 'Chest Pain'),
-            ('Shortness of Breath', 'Shortness of Breath'),
-            ('Dizziness', 'Dizziness'),
-            ('Fatigue', 'Fatigue')
-            
-        ],
-        widget=forms.Select(attrs={'class': 'form-control'}),
-        required=False
-    )
-    existing_conditions = forms.ChoiceField(
-        choices=[
-            ('None', 'None'),
             ('Diabetes', 'Diabetes'),
             ('Hypertension', 'Hypertension'),
-            ('High Cholesterol', 'High Cholesterol'),
-            ('Asthma', 'Asthma')
-            
+            ('High cholestrol', 'High cholestrol'),
+            ('Asthma', 'Asthma'),
         ],
-        widget=forms.Select(attrs={'class': 'form-control'}),
-        required=False
-    )
-    family_history = forms.ChoiceField(
+        widget=forms.Select(attrs={'class': 'form-control'})
+        )
+     family_history = forms.ChoiceField(
         choices=[
+            ('Yes', 'Yes'),
             ('No', 'No'),
-            ('Yes', 'Yes')
-            
         ],
         label='Family History of Heart Disease',
-        widget=forms.Select(attrs={'class': 'form-control'}),
-        required=True
-    )
-    laboratory_results = forms.ChoiceField(
-        choices=[
-            ('Normal', 'Normal'),
-            ('High Cholesterol', 'High Cholesterol'),
-            ('Low Iron', 'Low Iron'),
-            ('High Blood Sugar', 'High Blood Sugar')    
-        ],
-        label='Laboratory Results',
-        widget=forms.Select(attrs={'class': 'form-control'}),
-        required=True
-    )
-    smoking_status = forms.ChoiceField(
+        widget=forms.Select(attrs={'class': 'form-control'})
+        )
+     smoking_status = forms.ChoiceField(
         choices=[
             ('Never', 'Never'),
             ('Former', 'Former'),
-            ('Current', 'Current')
+            ('Current', 'Current'),
+    
         ],
-        label='Smoking Status',
-        widget=forms.Select(attrs={'class': 'form-control'}),
-        required=True
-    )        
+        widget=forms.Select(attrs={'class': 'form-control'})
+        )
+     lab_status = forms.ChoiceField(
+        choices=[
+            ('High Blood Sugar', 'High Blood Sugar'),
+            ('High cholestrol', 'High cholestrol'),
+            ('Low Iron', 'Low Iron'),
+            ('Normal Test Results', 'Normal Test Results'),
+        ],
+        widget=forms.Select(attrs={'class': 'form-control'})
+        )
+     symptom= forms.ChoiceField(
+        choices=[
+            ('chest pain', 'chest pain'),
+            ('dizziness', 'dizziness'),
+            ('fatigue', 'fatigue'),
+            ('nausea', 'nausea'),
+            ('palpitations', 'palpitations'),
+            ('shortness of breath', 'shortness of breath'),
+
+        ],
+        widget=forms.Select(attrs={'class': 'form-control'})
+        )
+

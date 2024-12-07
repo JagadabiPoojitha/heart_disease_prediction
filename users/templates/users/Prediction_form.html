@@ -8,14 +8,19 @@
     
     
     <style>
-        /* Body background with blue and white gradient */
-body {
-    background: linear-gradient(to bottom, #e6f7ff, #80d4ff); /* Blue and white gradient */
-    color: #000; /* Text color */
-    font-family: 'Arial', sans-serif;
-    height: 100vh;
-    margin: 0;
-}
+         * {
+            margin: 10;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-image: url("{% static 'images/heart77.jpg' %}");
+            background-size: cover; /* Makes the background cover the entire page */
+            background-repeat: no-repeat; /* Prevents the background from repeating */
+            background-position: center center; 
+        }
+
 
 /* Form container styling */
 .form-container {
@@ -64,6 +69,7 @@ input::placeholder {
 
 /* Optional: Add a floating image */
 .background-image {
+
     position: absolute;
     bottom: 10px;
     right: 10px;
@@ -73,7 +79,7 @@ input::placeholder {
 }
         body {
             background-color: #f0f8ff;
-            background-image: url("{% static 'heart_form.png' %}");
+            background-image: url("{% static 'images/heart77.jpg' %}");
             background-repeat: no-repeat;
             background-size: cover;
             min-height: 100vh;
@@ -94,7 +100,6 @@ input::placeholder {
             height: fit-content;
             animation: fadeIn 1s ease-out;
         }
-
         .disclaimer-heading {
             color: whitesmoke;
             font-size: 24px;
@@ -305,7 +310,8 @@ input::placeholder {
             </form>
         </div>
     </div>
-
+</div>
+</div>
     
 </body>
 </html>
